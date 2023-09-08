@@ -1,24 +1,18 @@
-import { useEffect, useState } from "react";
 import Thread from "../components/Thread";
-import { getThreadsFromLocalStorage } from "../utils/helpers/localStorage";
 import ThreadForm from "../components/ThreadForm";
+import { useThreads } from "../utils/contexts/ThreadContext";
 
 
 const ListPage = () => {
-    const [threads, setThreads] = useState<ThreadType[]>([])
-    console.log(threads)
-    useEffect(() => {
-        const threads = getThreadsFromLocalStorage()
-        setThreads(threads)
-    }, [])
+    const threads = useThreads()
 
     return (
         <div>
             <h1>List Page</h1>
-            {threads.map((thread) => (
+            {threads.threads.map((thread) => (
                 <Thread thread={thread}/>
             ))}
-            <ThreadForm threads={threads} setThreads={setThreads}/>
+            <ThreadForm />
         </div>
     )
 

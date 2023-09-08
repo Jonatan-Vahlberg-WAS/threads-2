@@ -1,12 +1,10 @@
 import React from "react";
-import { getUserFromLocalStorage, saveThreadsToLocalStorage } from "../utils/helpers/localStorage";
+import { getUserFromLocalStorage } from "../utils/helpers/localStorage";
+import { useThreads } from "../utils/contexts/ThreadContext";
 
-interface ThreadFormProps {
-    threads: ThreadType[]
-    setThreads: React.Dispatch<React.SetStateAction<ThreadType[]>>
-}
+const ThreadForm = () => {
 
-const ThreadForm = (props: ThreadFormProps) => {
+    const threads = useThreads()
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         const user = getUserFromLocalStorage()
@@ -16,8 +14,8 @@ const ThreadForm = (props: ThreadFormProps) => {
         const description = (e.currentTarget.elements[2] as HTMLInputElement).value
         const category = (e.currentTarget.elements[3] as HTMLInputElement).value as ThreadCategory
 
-        const newThread: Thread | QNAThread = {
-            id: props.threads.length + 1,
+        const newThread: ThreadType = {
+            id: threads.threads.length + 1,
             title,
             description: description,
             category,
@@ -25,12 +23,7 @@ const ThreadForm = (props: ThreadFormProps) => {
             creationDate: new Date().toISOString(),
             isAnswered: false,
         }
-        const newThreads: ThreadType[] =[
-            ...props.threads,
-            newThread
-        ]
-        saveThreadsToLocalStorage(newThreads)
-        props.setThreads(newThreads)
+        threads.actions.createThread(newThread)
         
 
     }

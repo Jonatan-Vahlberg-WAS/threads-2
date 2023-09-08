@@ -1,22 +1,16 @@
 import { useParams } from "react-router-dom";
 import ThreadDetail from "../components/ThreadDetail";
 import { useEffect, useState } from "react";
-import { getThreadsFromLocalStorage } from "../utils/helpers/localStorage";
 import CommentList from "../components/CommentList";
+import { useThreads } from "../utils/contexts/ThreadContext";
 
 const DetailPage = () => {
   const { id } = useParams();
-
-  console.log("params", useParams());
-
+  const threads = useThreads()
   const [thread, setThread] = useState<ThreadType | null>(null);
 
   useEffect(() => {
-    const threads = getThreadsFromLocalStorage();
-    if (threads) {
-      const thread = threads.find((thread) => thread.id === Number(id));
-      setThread(thread || null);
-    }
+    setThread(threads.actions.getThread(Number(id)))
   }, [id]);
 
   return (
