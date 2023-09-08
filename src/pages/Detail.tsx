@@ -3,6 +3,7 @@ import ThreadDetail from "../components/ThreadDetail";
 import { useEffect, useState } from "react";
 import CommentList from "../components/CommentList";
 import { useThreads } from "../utils/contexts/ThreadContext";
+import { CommentProvider } from "../utils/contexts/CommentContext";
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -17,7 +18,9 @@ const DetailPage = () => {
   return (
     <div>
       <ThreadDetail thread={thread} />
-      <CommentList threadId={Number(id)} />
+      <CommentProvider threadId={Number(id)}>
+        <CommentList threadId={Number(id)} />
+      </CommentProvider>
     </div>
   );
 };
