@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { getUserFromLocalStorage, saveCommentsToLocalStorage } from "../utils/helpers/localStorage";
+import { saveCommentsToLocalStorage } from "../utils/helpers/localStorage";
+import { useUser } from "../utils/contexts/UserContext";
 
 interface CommentFormProps {
     comments: ThreadComment[]
@@ -8,17 +9,18 @@ interface CommentFormProps {
 }
 
 const CommentForm = (props: CommentFormProps) => {
+    const user = useUser()
     const [content, setContent] = useState('')
 
     const onSubmit = (e: React.FormEvent<HTMLElement>) => {
-        const user = getUserFromLocalStorage()
         e.preventDefault()
+
         const newCommets =[
             ...props.comments,
             {
                 id: props.comments.length + 1,
                 content,
-                creator: user,
+                creator: user.user,
                 thread: props.threadId
             }
         ]

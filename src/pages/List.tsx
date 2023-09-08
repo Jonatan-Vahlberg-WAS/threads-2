@@ -10,7 +10,7 @@ const ListPage = () => {
         <div>
             <h1>List Page</h1>
             {threads.threads.map((thread) => (
-                <Thread thread={thread}/>
+                <Thread thread={thread} key={thread.id} />
             ))}
             <ThreadForm />
         </div>

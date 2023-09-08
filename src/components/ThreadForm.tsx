@@ -1,13 +1,13 @@
 import React from "react";
-import { getUserFromLocalStorage } from "../utils/helpers/localStorage";
 import { useThreads } from "../utils/contexts/ThreadContext";
+import { useUser } from "../utils/contexts/UserContext";
 
 const ThreadForm = () => {
 
+    const user = useUser()
     const threads = useThreads()
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        const user = getUserFromLocalStorage()
         e.preventDefault()
         // get the values from the form
         const title = (e.currentTarget.elements[1] as HTMLInputElement).value
@@ -19,7 +19,7 @@ const ThreadForm = () => {
             title,
             description: description,
             category,
-            creator: user,
+            creator: user.user,
             creationDate: new Date().toISOString(),
             isAnswered: false,
         }
