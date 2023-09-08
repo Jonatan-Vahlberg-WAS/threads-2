@@ -1,6 +1,7 @@
 import React from "react";
 import { useThreads } from "../utils/contexts/ThreadContext";
 import { useUser } from "../utils/contexts/UserContext";
+import RTE from "./RTE/RTE";
 
 const ThreadForm = () => {
 
@@ -49,6 +50,7 @@ const ThreadForm = () => {
                 </fieldset>
                 <button type="submit">Post</button>
             </form>
+            <RTE/>
         </div>
     )
 }
